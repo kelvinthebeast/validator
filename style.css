@@ -1,0 +1,115 @@
+/* Reset mặc định */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+  }
+  
+  body {
+    background-color: #f7f9fc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  /* Container chính */
+  .form-container {
+    background-color: #ffffff;
+    padding: 30px 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+  }
+  
+  h1 {
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #333333;
+  }
+  
+  /* Form nhóm */
+  .form-group {
+    margin-bottom: 20px;
+    text-align: left;
+  }
+  
+  label {
+    font-weight: bold;
+    font-size: 14px;
+    color: #555555;
+    display: block;
+    margin-bottom: 8px;
+  }
+  
+  input {
+    width: 100%;
+    padding: 10px 15px;
+    border: 1px solid #cccccc;
+    border-radius: 5px;
+    font-size: 16px;
+  }
+  
+  input:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+  }
+  
+  /* Button chính */
+  button {
+    width: 100%;
+    padding: 12px 0;
+    background-color: #007bff;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  button:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Hiệu ứng responsive */
+  @media (max-width: 480px) {
+    .form-container {
+      padding: 20px;
+    }
+  
+    h1 {
+      font-size: 20px;
+    }
+  
+    button {
+      font-size: 14px;
+    }
+  }
+  /* Các kiểu chung cho các input */
+input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+/* Hiển thị lỗi với màu đỏ */
+.invalid {
+  border-color: red; /* Đổi màu viền thành đỏ khi có lỗi */
+  background-color: #ffe6e6; /* Thêm màu nền đỏ nhạt để làm nổi bật */
+}
+
+/* Phần tử hiển thị thông báo lỗi */
+.form-message {
+  color: red; /* Màu chữ đỏ */
+  font-size: 14px;
+  display: block;
+  margin-top: 5px;
+}
