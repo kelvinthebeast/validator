@@ -22,9 +22,16 @@ function Validator(options) {
 
 
             if (inputElement) {
+                // xử lý trường hợp blur khỏi input
                 inputElement.onblur = () => {
 
                     validate(inputElement, rule);
+                };
+
+                inputElement.oninput = () => {
+                    var errorElement = inputElement.parentElement.querySelector(options.errorSelector);
+                    errorElement.innerText = "";
+                    inputElement.classList.remove("invalid");
                 };
             }
         });
