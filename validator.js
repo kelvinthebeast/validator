@@ -16,7 +16,7 @@ function Validator(options) {
     }
     if (formElement) {
         options.rules.forEach(rule => {
-
+            // dùng selector để Dom chọn đúng element của nó
             var inputElement = formElement.querySelector(rule.selector);
             
 
@@ -68,4 +68,14 @@ Validator.minLength = function (selector, min) {
             return value.length >= min? undefined : `Trường này phải có ít nhất ${min} ký tự`
         }
     }
+}
+
+Validator.isConfirmed = function (selector, getComfirmValue, message) {
+    return {
+        selector: selector,
+        test: function (value) {
+            return value === getComfirmValue() ? undefined : message || "Giá trị nhập vào không trùng khớp"
+        }
+    }
+
 }

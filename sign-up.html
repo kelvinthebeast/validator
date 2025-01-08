@@ -47,7 +47,11 @@
                     Validator.isRequired("#username"),
                     Validator.isEmail("#email"),
                     Validator.isRequired("#password"),
-                    Validator.minLength("#password",6)
+                    Validator.minLength("#password",6),
+                    // thêm đối số isConfirmed
+                    Validator.isConfirmed("#confirm-password", function () {
+                        return document.querySelector("#form-1 #password").value; // value là giá trị người dùng nhập vào
+                    }, "Vui lòng nhập lại mật khẩu")
                 ]
 
             }
