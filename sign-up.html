@@ -42,9 +42,12 @@
         Validator(
             {
                 form: "#form-1",
+                errorSelector: ".form-message",
                 rules: [
                     Validator.isRequired("#username"),
-                    Validator.isEmail("#email")
+                    Validator.isEmail("#email"),
+                    Validator.isRequired("#password"),
+                    Validator.minLength("#password",6)
                 ]
 
             }
