@@ -1,9 +1,21 @@
 function Validator(options) {
     const formElement = document.querySelector(options.form); // form-1
 
+    const selectorRules = {};
+
+    // hàm validate inputElement với ràng buộc rule
     function validate(inputElement, rule) {
-        var errorMessage = rule.test(inputElement.value);// test nhận 1 value
+        // var errorMessage = rule.test(inputElement.value);// test nhận 1 value
         var errorElement = inputElement.parentElement.querySelector(options.errorSelector);
+        var errorMessage;
+
+        var rules = selectorRules[rule.selector];
+        // lặp qua từng rule rồi kiểm tra
+        
+        for (var i = 0; i < rules.length; i++) {
+            errorMessage = rules[i](inputElement.value);
+            if (errorMessage) break;
+        }
         if (errorMessage) {
             errorElement.innerText = errorMessage; // dùng innerText thêm errorMessage
             inputElement.classList.add("invalid"); // chỉnh sửa fontend
@@ -15,11 +27,29 @@ function Validator(options) {
 
     }
     if (formElement) {
+        // khi submit form 
+        formElement.onsubmit = (e) => {
+            e.preventDefault();
+            // thuc hien lap qua tung rule 
+            options.rules.forEach(function (rule) {
+                var inputElement = formElement.querySelector(rule.selector);
+                validate(inputElement, rule);
+            })
+        }
+        // xu ly lap rule va xu ly (click, blur, oninput... )
         options.rules.forEach(rule => {
-            // dùng selector để Dom chọn đúng element của nó
-            var inputElement = formElement.querySelector(rule.selector);
+            
+            
+            // lưu lại các rule cho mỗi input
+            if (Array.isArray(selectorRules[rule.selector]) ) {
+                selectorRules[rule.selector].push(rule.test);
+            } else {
+                selectorRules[rule.selector] = [rule.test]; 
+            }
             
 
+            // dùng selector để Dom chọn đúng element của nó
+            var inputElement = formElement.querySelector(rule.selector);
 
             if (inputElement) {
                 // xử lý trường hợp blur khỏi input
@@ -42,8 +72,8 @@ function Validator(options) {
 Validator.isRequired = function (selector) {
     return {
         selector: selector,
-        test: function (value) {
-            return value.trim() ? undefined : "vui lòng nhập trường này"
+        test: function (value, message) {
+            return value.trim() ? undefined : message ||"vui lòng nhập trường này"
         }
     }
 };
@@ -52,10 +82,10 @@ Validator.isRequired = function (selector) {
 Validator.isEmail = function (selector) {
     return {
         selector: selector,
-        test: function (value) {
+        test: function (value, message) {
             const re =/^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
             
-            return re.test(value) ? undefined : "Trường này không phải là email"
+            return re.test(value) ? undefined : message ||"Trường này không phải là email"
         }
     };
 }
@@ -64,8 +94,8 @@ Validator.isEmail = function (selector) {
 Validator.minLength = function (selector, min) {
     return {
         selector: selector,
-        test: function (value) {
-            return value.length >= min? undefined : `Trường này phải có ít nhất ${min} ký tự`
+        test: function (value, message) {
+            return value.length >= min? undefined : message ||`Trường này phải có ít nhất ${min} ký tự`
         }
     }
 }
