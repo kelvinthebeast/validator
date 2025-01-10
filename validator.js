@@ -3,22 +3,22 @@ function Validator(options) {
 
     const selectorRules = {};
 
-    // hàm validate inputElement với ràng buộc rule
+   
     function validate(inputElement, rule) {
-        // var errorMessage = rule.test(inputElement.value);// test nhận 1 value
+ 
         var errorElement = inputElement.parentElement.querySelector(options.errorSelector);
         var errorMessage;
 
         var rules = selectorRules[rule.selector];
-        // lặp qua từng rule rồi kiểm tra
+        // loop each rule and check 
         
         for (var i = 0; i < rules.length; i++) {
             errorMessage = rules[i](inputElement.value);
             if (errorMessage) break;
         }
         if (errorMessage) {
-            errorElement.innerText = errorMessage; // dùng innerText thêm errorMessage
-            inputElement.classList.add("invalid"); // chỉnh sửa fontend
+            errorElement.innerText = errorMessage; // add innerText add errorMessage
+            inputElement.classList.add("invalid"); //enable fontend
         } else {
             errorElement.innerText = "";
             inputElement.classList.remove("invalid");
