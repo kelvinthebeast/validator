@@ -40,8 +40,21 @@ function Validator(options) {
                     
                 }
             });
+            
+            
             if (isFormValid) {
-                console.log("Không có lỗi");
+
+                // trường hợp là function không mặc định
+                if (typeof options.onSubmit === 'function') {
+                    var enableInputs = formElement.querySelectorAll("[name]");
+                    var formValues = Array.from(enableInputs).reduce(function(values, input){
+                        return (values[input.name] = input.value) && values;
+                    }, {});
+                    options.onSubmit(formValues);
+                } else {
+                    // submit với hành vi mặc định
+                    formElement.submit();
+                }
 
             } else {
                 console.log("có lỗi")
