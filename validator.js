@@ -23,18 +23,29 @@ function Validator(options) {
             errorElement.innerText = "";
             inputElement.classList.remove("invalid");
         }
-
+        return !errorMessage;
 
     }
     if (formElement) {
         // khi submit form 
         formElement.onsubmit = (e) => {
             e.preventDefault();
+            var isFormValid = true;
             // thuc hien lap qua tung rule 
             options.rules.forEach(function (rule) {
                 var inputElement = formElement.querySelector(rule.selector);
-                validate(inputElement, rule);
-            })
+                var isValid = validate(inputElement, rule);
+                if (!isValid) {// có 1 ông không valid thì trả về false
+                    isFormValid = false;
+                    
+                }
+            });
+            if (isFormValid) {
+                console.log("Không có lỗi");
+
+            } else {
+                console.log("có lỗi")
+            }
         }
         // xu ly lap rule va xu ly (click, blur, oninput... )
         options.rules.forEach(rule => {
